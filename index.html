@@ -17,24 +17,45 @@
     /* ─── НАВБАР ─── */
     nav {
       background: #3c3c3c;
-      display: flex;
-      align-items: center;
-      padding: 0 12px;
-      height: 48px;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 200;
+    }
+
+    .nav-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 48px;
+      padding: 0 14px;
     }
 
     .nav-logo {
       color: #fff;
       font-size: 15px;
       font-weight: 400;
-      margin-right: 20px;
       white-space: nowrap;
-      flex-shrink: 0;
     }
 
+    /* бургер — тільки на телефоні */
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .burger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: all 0.25s;
+    }
+
+    /* посилання навбару — десктоп */
     .nav-links {
       display: flex;
     }
@@ -48,18 +69,42 @@
       display: flex;
       align-items: center;
       border-bottom: 2px solid transparent;
-      transition: background 0.15s;
       white-space: nowrap;
+      transition: background 0.15s;
     }
 
-    .nav-links a:hover {
-      background: rgba(255,255,255,0.1);
-    }
+    .nav-links a:hover { background: rgba(255,255,255,0.1); }
 
     .nav-links a.active {
       border-bottom: 2px solid #fff;
       color: #fff;
     }
+
+    /* ─── МОБІЛЬНЕ МЕНЮ ─── */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: #3c3c3c;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .mobile-menu a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 13px 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: block;
+    }
+
+    .mobile-menu a.active {
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+      border-left: 3px solid #fff;
+      padding-left: 15px;
+    }
+
+    .mobile-menu.open { display: flex; }
 
     /* ─── СТОРІНКИ ─── */
     .page { display: none; }
@@ -88,20 +133,15 @@
     .hero h1 {
       position: relative;
       color: #fff;
-      font-size: 42px;
+      font-size: 40px;
       font-weight: 900;
       text-align: center;
       line-height: 1.2;
       padding: 0 20px;
     }
 
-    .hero-small {
-      height: 200px;
-    }
-
-    .hero-small h1 {
-      font-size: 34px;
-    }
+    .hero-small { height: 180px; }
+    .hero-small h1 { font-size: 30px; }
 
     /* ─── КОНТЕНТ ─── */
     .content {
@@ -111,7 +151,7 @@
     }
 
     .content p {
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.75;
       color: #333;
       margin-bottom: 10px;
@@ -130,23 +170,17 @@
     }
 
     .content ul li {
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.85;
       color: #333;
     }
 
+    /* ─── ДВА СТОВПЦІ ─── */
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 28px;
       margin-top: 14px;
-    }
-
-    @media (max-width: 560px) {
-      .two-col { grid-template-columns: 1fr; }
-      .hero h1 { font-size: 26px; }
-      .hero { height: 220px; }
-      .hero-small h1 { font-size: 22px; }
     }
 
     .col-block h3 {
@@ -155,21 +189,59 @@
       margin-bottom: 6px;
       color: #111;
     }
+
+    /* ─── МОБІЛЬНА АДАПТАЦІЯ ─── */
+    @media (max-width: 640px) {
+      /* навбар */
+      .nav-links { display: none; }
+      .burger { display: flex; }
+
+      /* хедер */
+      .hero { height: 230px; }
+      .hero h1 { font-size: 24px; }
+      .hero-small { height: 150px; }
+      .hero-small h1 { font-size: 20px; }
+
+      /* контент */
+      .content { padding: 20px 16px 48px; }
+      .content p, .content ul li { font-size: 14px; }
+      .content h2 { font-size: 17px; }
+
+      /* два стовпці → один */
+      .two-col { grid-template-columns: 1fr; gap: 18px; }
+    }
   </style>
 </head>
 <body>
 
 <nav>
-  <div class="nav-logo">Моя професія</div>
-  <div class="nav-links">
-    <a href="#" class="active" onclick="show('home',this);return false;">Головна сторінка</a>
-    <a href="#" onclick="show('duties',this);return false;">Обов'язки та навички</a>
-    <a href="#" onclick="show('pros',this);return false;">Переваги та виклики</a>
-    <a href="#" onclick="show('edu',this);return false;">Освітні можливості</a>
+  <div class="nav-top">
+    <div class="nav-logo">Моя професія</div>
+
+    <!-- десктоп посилання -->
+    <div class="nav-links">
+      <a href="#" class="active" onclick="show('home',this,false);return false;">Головна сторінка</a>
+      <a href="#" onclick="show('duties',this,false);return false;">Обов'язки та навички</a>
+      <a href="#" onclick="show('pros',this,false);return false;">Переваги та виклики</a>
+      <a href="#" onclick="show('edu',this,false);return false;">Освітні можливості</a>
+    </div>
+
+    <!-- бургер кнопка -->
+    <div class="burger" onclick="toggleMenu()" id="burger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <!-- мобільне меню -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#" class="active" onclick="show('home',this,true);return false;">Головна сторінка</a>
+    <a href="#" onclick="show('duties',this,true);return false;">Обов'язки та навички</a>
+    <a href="#" onclick="show('pros',this,true);return false;">Переваги та виклики</a>
+    <a href="#" onclick="show('edu',this,true);return false;">Освітні можливості</a>
   </div>
 </nav>
 
-<!-- ГОЛОВНА -->
+<!-- ══ ГОЛОВНА ══ -->
 <div id="home" class="page active">
   <div class="hero">
     <div class="hero-bg"></div>
@@ -193,7 +265,7 @@
   </div>
 </div>
 
-<!-- ОБОВ'ЯЗКИ -->
+<!-- ══ ОБОВ'ЯЗКИ ══ -->
 <div id="duties" class="page">
   <div class="hero hero-small">
     <div class="hero-bg"></div>
@@ -231,7 +303,7 @@
   </div>
 </div>
 
-<!-- ПЕРЕВАГИ -->
+<!-- ══ ПЕРЕВАГИ ══ -->
 <div id="pros" class="page">
   <div class="hero hero-small">
     <div class="hero-bg"></div>
@@ -276,7 +348,7 @@
   </div>
 </div>
 
-<!-- ОСВІТА -->
+<!-- ══ ОСВІТА ══ -->
 <div id="edu" class="page">
   <div class="hero hero-small">
     <div class="hero-bg"></div>
@@ -301,7 +373,7 @@
     </ul>
 
     <h2>Продовження освіти</h2>
-    <p>Після коледжу можна вступити до ДТЕУ або інших університетів на скорочений термін навчання і здобути ступінь бакалавра чи магістра. Також є можливість отримати ліцензію митного брокера від Державної митної служби України для самостійної практики.</p>
+    <p>Після коледжу можна вступити до ДТЕУ або інших університетів на скорочений термін навчання і здобути ступінь бакалавра чи магістра. Також є можливість отримати ліцензію митного брокера від Державної митної служби України.</p>
 
     <h2>Перспективи після навчання</h2>
     <ul>
@@ -315,12 +387,32 @@
 </div>
 
 <script>
-  function show(id, el) {
+  var currentPage = 'home';
+
+  function show(id, el, isMobile) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => a.classList.remove('active'));
+
     document.getElementById(id).classList.add('active');
     el.classList.add('active');
+
+    // синхронізуємо активну вкладку в обох меню
+    var idx = ['home','duties','pros','edu'].indexOf(id);
+    var desktopLinks = document.querySelectorAll('.nav-links a');
+    var mobileLinks = document.querySelectorAll('.mobile-menu a');
+    if (desktopLinks[idx]) desktopLinks[idx].classList.add('active');
+    if (mobileLinks[idx]) mobileLinks[idx].classList.add('active');
+
+    if (isMobile) {
+      document.getElementById('mobileMenu').classList.remove('open');
+    }
+
     window.scrollTo(0, 0);
+    currentPage = id;
+  }
+
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
   }
 </script>
 </body>
