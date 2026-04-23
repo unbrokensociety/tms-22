@@ -4,40 +4,84 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Моя професія</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* ─── БАЗОВІ НАЛАШТУВАННЯ (GOOGLE SITES STYLE) ─── */
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+      -webkit-tap-highlight-color: transparent;
+    }
 
     body {
       font-family: 'Roboto', Arial, sans-serif;
-      background: #fff;
-      color: #333;
+      background-color: #ffffff;
+      color: #202124;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    /* ─── НАВБАР ─── */
+    /* ─── КЛАСИЧНИЙ НАВБАР ─── */
     nav {
-      background: #3c3c3c;
+      background: #ffffff;
       position: sticky;
       top: 0;
-      z-index: 200;
+      z-index: 100;
+      box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 2px 6px 2px rgba(60,64,67,0.15);
     }
 
     .nav-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 48px;
-      padding: 0 14px;
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 64px;
+      padding: 0 24px;
     }
 
     .nav-logo {
-      color: #fff;
-      font-size: 15px;
-      font-weight: 400;
-      white-space: nowrap;
+      color: #202124;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
     }
 
-    /* бургер — тільки на телефоні */
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: #5f6368;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      padding: 8px 0;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover { color: #202124; }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: #1a73e8;
+      border-radius: 3px 3px 0 0;
+      transform: scaleX(0);
+      transition: transform 0.2s ease;
+    }
+
+    .nav-links a.active { color: #1a73e8; }
+    .nav-links a.active::after { transform: scaleX(1); }
+
     .burger {
       display: none;
       flex-direction: column;
@@ -48,77 +92,52 @@
 
     .burger span {
       display: block;
-      width: 22px;
+      width: 24px;
       height: 2px;
-      background: #fff;
+      background: #5f6368;
       border-radius: 2px;
-      transition: all 0.25s;
+      transition: 0.3s;
     }
 
-    /* посилання навбару — десктоп */
-    .nav-links {
-      display: flex;
-    }
-
-    .nav-links a {
-      color: rgba(255,255,255,0.85);
-      text-decoration: none;
-      font-size: 13px;
-      padding: 0 14px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      border-bottom: 2px solid transparent;
-      white-space: nowrap;
-      transition: background 0.15s;
-    }
-
-    .nav-links a:hover { background: rgba(255,255,255,0.1); }
-
-    .nav-links a.active {
-      border-bottom: 2px solid #fff;
-      color: #fff;
-    }
-
-    /* ─── МОБІЛЬНЕ МЕНЮ ─── */
     .mobile-menu {
       display: none;
       flex-direction: column;
-      background: #3c3c3c;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .mobile-menu a {
-      color: rgba(255,255,255,0.85);
-      text-decoration: none;
-      font-size: 14px;
-      padding: 13px 18px;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      display: block;
-    }
-
-    .mobile-menu a.active {
-      color: #fff;
-      background: rgba(255,255,255,0.08);
-      border-left: 3px solid #fff;
-      padding-left: 15px;
+      background: #ffffff;
+      border-top: 1px solid #e8eaed;
     }
 
     .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      color: #3c4043;
+      text-decoration: none;
+      font-size: 15px;
+      padding: 16px 24px;
+      border-left: 4px solid transparent;
+      transition: background 0.2s;
+    }
+
+    .mobile-menu a.active {
+      color: #1a73e8;
+      background: #e8f0fe;
+      border-left-color: #1a73e8;
+      font-weight: 500;
+    }
 
     /* ─── СТОРІНКИ ─── */
     .page { display: none; }
     .page.active { display: block; }
 
-    /* ─── ХЕДЕР З ФОТО ─── */
+    /* ─── HERO BANNER ─── */
     .hero {
       position: relative;
       width: 100%;
-      height: 320px;
+      height: 40vh;
+      min-height: 300px;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
+      background-color: #202124;
     }
 
     .hero-bg {
@@ -127,88 +146,73 @@
       background-image: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1400&q=80');
       background-size: cover;
       background-position: center;
-      filter: brightness(0.45);
+      opacity: 0.4;
     }
 
     .hero h1 {
       position: relative;
-      color: #fff;
+      color: #ffffff;
       font-size: 40px;
-      font-weight: 900;
+      font-weight: 700;
       text-align: center;
-      line-height: 1.2;
-      padding: 0 20px;
+      line-height: 1.3;
+      padding: 0 24px;
+      max-width: 800px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
-    .hero-small { height: 180px; }
-    .hero-small h1 { font-size: 30px; }
+    .hero-small { height: 25vh; min-height: 200px; }
+    .hero-small h1 { font-size: 32px; }
 
     /* ─── КОНТЕНТ ─── */
     .content {
       max-width: 900px;
       margin: 0 auto;
-      padding: 28px 20px 60px;
+      padding: 48px 24px 100px; /* Збільшений відступ знизу замість футера */
     }
 
-    .content p {
-      font-size: 15px;
-      line-height: 1.75;
-      color: #333;
-      margin-bottom: 10px;
+    @keyframes revealUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
+
+    .page.active .content > * {
+      opacity: 0;
+      animation: revealUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    
+    .page.active .content > *:nth-child(1) { animation-delay: 0.1s; }
+    .page.active .content > *:nth-child(2) { animation-delay: 0.2s; }
+    .page.active .content > *:nth-child(3) { animation-delay: 0.3s; }
+    .page.active .content > *:nth-child(4) { animation-delay: 0.4s; }
+
+    .content p { font-size: 16px; color: #3c4043; margin-bottom: 20px; }
 
     .content h2 {
-      font-size: 19px;
-      font-weight: 700;
-      margin: 26px 0 10px;
-      color: #111;
+      font-size: 24px;
+      font-weight: 400;
+      color: #202124;
+      margin: 40px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e8eaed;
     }
 
-    .content ul {
-      padding-left: 22px;
-      margin-bottom: 10px;
-    }
+    .content ul { padding-left: 24px; margin-bottom: 24px; }
+    .content ul li { font-size: 16px; color: #3c4043; margin-bottom: 8px; list-style-type: disc; }
+    .content ul li::marker { color: #1a73e8; }
 
-    .content ul li {
-      font-size: 15px;
-      line-height: 1.85;
-      color: #333;
-    }
-
-    /* ─── ДВА СТОВПЦІ ─── */
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-      margin-top: 14px;
-    }
-
-    .col-block h3 {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: #111;
-    }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+    .col-block { background: #f8f9fa; border: 1px solid #dadce0; border-radius: 8px; padding: 24px; }
+    .col-block h3 { font-size: 18px; font-weight: 500; color: #202124; margin-bottom: 16px; }
 
     /* ─── МОБІЛЬНА АДАПТАЦІЯ ─── */
-    @media (max-width: 640px) {
-      /* навбар */
+    @media (max-width: 768px) {
       .nav-links { display: none; }
       .burger { display: flex; }
-
-      /* хедер */
-      .hero { height: 230px; }
-      .hero h1 { font-size: 24px; }
-      .hero-small { height: 150px; }
-      .hero-small h1 { font-size: 20px; }
-
-      /* контент */
-      .content { padding: 20px 16px 48px; }
-      .content p, .content ul li { font-size: 14px; }
-      .content h2 { font-size: 17px; }
-
-      /* два стовпці → один */
-      .two-col { grid-template-columns: 1fr; gap: 18px; }
+      .hero h1 { font-size: 28px; }
+      .hero-small h1 { font-size: 24px; }
+      .two-col { grid-template-columns: 1fr; }
+      .content { padding: 32px 16px 80px; }
     }
   </style>
 </head>
@@ -217,22 +221,16 @@
 <nav>
   <div class="nav-top">
     <div class="nav-logo">Моя професія</div>
-
-    <!-- десктоп посилання -->
     <div class="nav-links">
       <a href="#" class="active" onclick="show('home',this,false);return false;">Головна сторінка</a>
-      <a href="#" onclick="show('duties',this,false);return false;">Обов'язки та навички</a>
-      <a href="#" onclick="show('pros',this,false);return false;">Переваги та виклики</a>
-      <a href="#" onclick="show('edu',this,false);return false;">Освітні можливості</a>
+      <a href="#" onclick="show('duties',this,false);return false;">Обов'язки</a>
+      <a href="#" onclick="show('pros',this,false);return false;">Переваги</a>
+      <a href="#" onclick="show('edu',this,false);return false;">Освіта</a>
     </div>
-
-    <!-- бургер кнопка -->
     <div class="burger" onclick="toggleMenu()" id="burger">
       <span></span><span></span><span></span>
     </div>
   </div>
-
-  <!-- мобільне меню -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="#" class="active" onclick="show('home',this,true);return false;">Головна сторінка</a>
     <a href="#" onclick="show('duties',this,true);return false;">Обов'язки та навички</a>
@@ -241,174 +239,114 @@
   </div>
 </nav>
 
-<!-- ══ ГОЛОВНА ══ -->
 <div id="home" class="page active">
   <div class="hero">
     <div class="hero-bg"></div>
-    <h1>Моя майбутня професія:<br>товарознавець та<br>митний декларант</h1>
+    <h1>Товарознавець та<br>митний декларант</h1>
   </div>
   <div class="content">
-    <p>Товарознавець та митний декларант — це фахівець, який займається вивченням і оцінкою товарів, їх класифікацією, а також оформленням документів для переміщення товарів через митний кордон. Це одна з найбільш затребуваних спеціальностей у сфері торгівлі та зовнішньоекономічної діяльності.</p>
-    <p>Я навчаюся за спеціальністю 076 «Товарознавство і митна справа» у Житомирському торговельно-економічному фаховому коледжі ДТЕУ, група ТМС-22.</p>
-
+    <p>Товарознавець та митний декларант — це фахівець, який займається вивченням і оцінкою товарів, їх класифікацією, а також оформленням документів для переміщення товарів через митний кордон.</p>
+    <p>Я навчаюся за спеціальністю 076 «Товарознавство і митна справа» у фаховому коледжі, група ТМС-22.</p>
     <h2>Чим займається фахівець?</h2>
-    <p>Фахівець поєднує дві ключові сфери: товарознавство — вивчення властивостей і якості товарів, та митну справу — оформлення імпортно-експортних операцій. Він працює на перетині торгівлі, логістики та державного контролю.</p>
-
+    <p>Він працює на перетині торгівлі, логістики та державного контролю, поєднуючи знання про якість товарів та юридичні тонкощі митниці.</p>
     <h2>Де потрібен такий спеціаліст?</h2>
     <ul>
       <li>Торговельні та виробничі підприємства</li>
       <li>Митні органи та прикордонні пости</li>
       <li>Логістичні та митно-брокерські компанії</li>
-      <li>Підприємства з імпорту та експорту товарів</li>
-      <li>Лабораторії якості та сертифікаційні центри</li>
     </ul>
   </div>
 </div>
 
-<!-- ══ ОБОВ'ЯЗКИ ══ -->
 <div id="duties" class="page">
   <div class="hero hero-small">
     <div class="hero-bg"></div>
     <h1>Обов'язки та навички</h1>
   </div>
   <div class="content">
-    <h2>Основні обов'язки фахівця</h2>
+    <h2>Основні обов'язки</h2>
     <ul>
       <li>Класифікація товарів за УКТ ЗЕД</li>
       <li>Підготовка та подача митних декларацій</li>
-      <li>Визначення митної вартості товарів</li>
-      <li>Контроль якості та відповідності товарів стандартам</li>
-      <li>Оформлення товаросупровідних документів (накладні, інвойси, сертифікати)</li>
-      <li>Супровід вантажів при перетині кордону</li>
+      <li>Контроль якості та відповідності стандартам</li>
       <li>Взаємодія з митними органами та брокерами</li>
-      <li>Проведення товарознавчої експертизи</li>
     </ul>
-
     <h2>Необхідні знання</h2>
     <ul>
       <li>Митний кодекс України та закони про ЗЕД</li>
-      <li>Основи товарознавства та стандартизації</li>
       <li>Робота з програмами ЄАІС, M.E.Doc, 1С</li>
-      <li>Англійська мова для роботи з міжнародними документами</li>
-      <li>Основи бухгалтерського обліку та економіки</li>
-    </ul>
-
-    <h2>Особисті якості</h2>
-    <ul>
-      <li>Уважність до деталей і відповідальність</li>
-      <li>Аналітичне мислення</li>
-      <li>Вміння працювати з великим об'ємом документів</li>
-      <li>Стресостійкість та комунікабельність</li>
+      <li>Англійська мова для міжнародної документації</li>
     </ul>
   </div>
 </div>
 
-<!-- ══ ПЕРЕВАГИ ══ -->
 <div id="pros" class="page">
   <div class="hero hero-small">
     <div class="hero-bg"></div>
     <h1>Переваги та виклики</h1>
   </div>
   <div class="content">
-    <p>Як і кожна спеціальність, робота товарознавця та митного декларанта має свої позитивні сторони та складнощі. Важливо знати про них заздалегідь.</p>
-
     <div class="two-col">
       <div class="col-block">
         <h3>Переваги</h3>
         <ul>
-          <li>Стабільний попит на ринку праці</li>
+          <li>Стабільний попит на ринку</li>
           <li>Гідна заробітна плата</li>
           <li>Робота з міжнародними партнерами</li>
-          <li>Різноманітність завдань щодня</li>
-          <li>Можливості для кар'єрного зростання</li>
-          <li>Можна відкрити власну справу</li>
-          <li>Актуальність в умовах розвитку ЗЕД України</li>
         </ul>
       </div>
       <div class="col-block">
         <h3>Виклики</h3>
         <ul>
-          <li>Часті зміни у митному законодавстві</li>
-          <li>Висока відповідальність за помилки</li>
-          <li>Стресові ситуації при затримках вантажів</li>
-          <li>Необхідність постійно навчатися</li>
-          <li>Великий обсяг документообігу</li>
-          <li>Ненормований робочий день у деяких компаніях</li>
+          <li>Зміни у законодавстві</li>
+          <li>Висока відповідальність</li>
+          <li>Великий обсяг документів</li>
         </ul>
       </div>
     </div>
-
-    <h2>Рівень заробітної плати в Україні</h2>
+    <h2>Заробітна плата</h2>
     <ul>
-      <li>Початковий рівень (без досвіду): від 12 000 грн</li>
-      <li>Спеціаліст із досвідом 1–3 роки: 18 000–30 000 грн</li>
-      <li>Митний брокер із ліцензією: від 35 000 грн і вище</li>
-      <li>Керівник митного відділу: від 50 000 грн</li>
+      <li>Спеціаліст із досвідом: 18 000–30 000 грн</li>
+      <li>Митний брокер: від 35 000 грн</li>
     </ul>
   </div>
 </div>
 
-<!-- ══ ОСВІТА ══ -->
 <div id="edu" class="page">
   <div class="hero hero-small">
     <div class="hero-bg"></div>
     <h1>Освітні можливості</h1>
   </div>
   <div class="content">
-    <p>Спеціальність 076 «Товарознавство і митна справа» можна здобути як у коледжі, так і в університеті. Навчання дає широку базу для роботи в торгівлі та митній галузі.</p>
-
-    <h2>Навчання у ЖТЕФК</h2>
-    <p>Житомирський торговельно-економічний фаховий коледж ДТЕУ готує фахових молодших бакалаврів за спеціальністю 076. Термін навчання — 3 роки на базі 9 класів або 2 роки на базі 11 класів.</p>
-    <p>Після закінчення коледжу випускники отримують диплом фахового молодшого бакалавра і можуть одразу працевлаштуватися або продовжити навчання в університеті.</p>
-
-    <h2>Що вивчають у коледжі?</h2>
+    <h2>Навчання за фахом</h2>
+    <p>Спеціальність 076 «Товарознавство і митна справа» готує фахових молодших бакалаврів. Навчання дає широку базу для роботи в торгівлі та логістиці.</p>
+    <h2>Що вивчають?</h2>
     <ul>
-      <li>Товарознавство продовольчих та непродовольчих товарів</li>
       <li>Митне право та митний контроль</li>
-      <li>Зовнішньоекономічна діяльність підприємства</li>
+      <li>Зовнішньоекономічна діяльність</li>
       <li>Стандартизація та сертифікація продукції</li>
-      <li>Бухгалтерський облік та економіка підприємства</li>
       <li>Інформаційні технології в митній справі</li>
-      <li>Іноземна мова для ділового спілкування</li>
-    </ul>
-
-    <h2>Продовження освіти</h2>
-    <p>Після коледжу можна вступити до ДТЕУ або інших університетів на скорочений термін навчання і здобути ступінь бакалавра чи магістра. Також є можливість отримати ліцензію митного брокера від Державної митної служби України.</p>
-
-    <h2>Перспективи після навчання</h2>
-    <ul>
-      <li>Митний декларант або брокер у приватній компанії</li>
-      <li>Інспектор митної служби</li>
-      <li>Товарознавець у торговельній мережі</li>
-      <li>Фахівець із зовнішньоекономічної діяльності</li>
-      <li>Власний митно-брокерський бізнес</li>
     </ul>
   </div>
 </div>
 
 <script>
-  var currentPage = 'home';
-
   function show(id, el, isMobile) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => a.classList.remove('active'));
 
-    document.getElementById(id).classList.add('active');
-    el.classList.add('active');
+    var targetPage = document.getElementById(id);
+    void targetPage.offsetWidth; 
+    targetPage.classList.add('active');
 
-    // синхронізуємо активну вкладку в обох меню
     var idx = ['home','duties','pros','edu'].indexOf(id);
-    var desktopLinks = document.querySelectorAll('.nav-links a');
-    var mobileLinks = document.querySelectorAll('.mobile-menu a');
-    if (desktopLinks[idx]) desktopLinks[idx].classList.add('active');
-    if (mobileLinks[idx]) mobileLinks[idx].classList.add('active');
+    document.querySelectorAll('.nav-links a')[idx].classList.add('active');
+    document.querySelectorAll('.mobile-menu a')[idx].classList.add('active');
 
     if (isMobile) {
       document.getElementById('mobileMenu').classList.remove('open');
     }
-
-    window.scrollTo(0, 0);
-    currentPage = id;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function toggleMenu() {
